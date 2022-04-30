@@ -105,6 +105,25 @@ print("number of consonents :",c)
 
 
 
+# tuple 1st problem
+def divisible(t2,t,k):
+  n=len(t)
+  for i in range(0,n):
+      t1=t[i][0]
+      t3=t[i][1]
+      t4=t[i][2]
+      if t1%k == 0:
+        if t3%k == 0:
+          if t4%k == 0:
+            t2=t2+((t[i][0],t[i][1],t[i][2]),)
+  print(t2)
+t2=()
+t = [(6, 24, 12), (60, 12, 6), (12, 18, 21)]
+k = 6
+divisible(t2,t,k)
+
+
+
 # tuples 2nd problem
 t=()
 t1=[(1, 7), (6, 7), (8, 100), (4, 21)]
