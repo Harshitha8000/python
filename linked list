@@ -128,3 +128,115 @@ if __name__=='__main__':
     linked_list.insert(2)
     linked_list.insert(3)
     linked_list.traverse_backword()
+
+
+# stact
+class Stack:
+    def __init__(self):
+        self.stack =[]
+    
+    def push(self,data):
+        self.stack.append(data)
+    def pop(self):
+        if self.stack_size()<1:
+            return
+        data = self.stack[-1]
+        del self.stack[-1]
+        return data
+    def peek(self):
+        return self.stack[-1]
+    def is_empty(self):
+        return self.stack == []
+    def stack_size(self):
+        return len(self.stack)
+    
+stack = Stack()
+stack.push(10)
+stack.push(20)
+stack.push(30)
+print('size : %d' % stack.stack_size())
+print('popped item : %d' % stack.pop())
+print('size : %d' % stack.stack_size())
+print('peek item : %d' % stack.peek())
+
+
+# queue 
+class Queue:
+    def __init__(self):
+        self.queue=[]
+    def is_empty(self):
+        return self.queue==[]
+    def enqueue(self,data):
+        self.queue.append(data)
+    def dequeue(self):
+        if self.size_queue() !=0:
+            data=self.queue[0]
+            del self.queue[0]
+            return data
+        else:
+            return -1
+    def peek(self):
+        return self.queue[0]
+    def size_queue(self):
+        return len(self.queue)
+queue=Queue()
+queue.enqueue(6)
+queue.enqueue(7) 
+queue.enqueue(8)
+queue.enqueue(9)
+print('size : %d'% queue.size_queue())
+print('dequeue : %d'% queue.dequeue())
+print('size : %d'% queue.size_queue())
+
+
+# max number in a stack
+class MaxStack:
+    def __init__(self):
+        self.main_stack=[]
+        self.max_stack=[]
+    def push(self,data):
+        self.main_stack.append(data)
+        if(len(self.main_stack)==1):
+            self.max_stack.append(data)
+            return
+        
+        if data>self.max_stack[-1]:
+            self.max_stack.append(data)
+        else:
+            self.max_stack.append(self.max_stack[-1])
+    def pop(self):
+        self.max_stack.pop()
+        return self.main_stack.pop()
+    def get_max_item(self):
+        return self.max_stack.pop()
+if __name__=='__main__':
+        max_stack=MaxStack()
+        max_stack.push(1000)
+        max_stack.push(4455)
+        max_stack.push(16780)
+        max_stack.push(55656565)
+        print(max_stack.get_max_item())
+        
+
+# queue using one stack
+class Queue:
+    def __init__(self):
+        self.stack=[]
+    def enqueue(self,data):
+        self.stack.append(data)
+    def dequeue(self):
+        if len(self.stack)==1:
+            return self.stack.pop()
+        item = self.stack.pop()
+        dequeued_item=self.dequeue()
+        self.stack.append(item)
+        return dequeued_item
+if __name__=='__main__':
+    queue=Queue()
+    queue.enqueue(10)
+    queue.enqueue(5)
+    queue.enqueue(20)
+    print(queue.dequeue())
+    queue.enqueue(100)
+    print(queue.dequeue())
+    print(queue.dequeue())
