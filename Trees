@@ -32,7 +32,72 @@ class BinarySearchTree:
             else:
                 node.right_node=Node(data,node)
                 
+    
+    # removing a node and rearranging the BST
+    def remove(self,data):
+        if self.root:
+            self.remove_node(data,self.root)
+    def remove_node(self,data,node):
+        # first we have to find the node we want to remove
+        if node is None:
+            return
+        if data<node.data:
+            self.remove_node(data,node.left_node)
+        elif data>node.data:
+            self.remove_node(data,node.right_node)
+        else:
+            # we have found the node we want to remove
+            # there are 3 options
+            # Leaf Node case
+            if node.left_node is None and node.right_node is None:
+                print('remove a leaf node : %d'% node.data)
+                parent=node.parent
+                if parent is not None and parent.left_node == node:
+                    parent.left_node = None
+                if parent is not None and parent.right_node == node:
+                    parent.right_node=None
+                if parent is None:
+                    self.root = None
+                del node
+            # when there is a single child
+            elif node.left_node is None and node.right_node is not None:
+                print('remove a node with single right child')
+                parent = node.parent
+                if parent is not None and parent.left_node == node:
+                    parent.left_node = node.right_node
+                if parent is not None and parent.right_node == node:
+                    parent.right_node = node.right_node
+                if parent is None:
+                    self.root = node.right_node
+                node.right_node.parent=parent
+                del node
+            elif node.right_node is None and node.left_node is not None:
+                print('remove a node with single left child')
+                parent = node.parent
+                if parent is not None:
+                    if parent.left_node == node:
+                        parent.left_node = node.left_node
+                    if parent.right_node == node:
+                        parent.right_node = node.left_node
+                else:
+                    self.root = node.left_node
+                node.left_node.parent=parent
+                del node
+            # remove node with 2 children
+            else:
+                print('remove node with two children ')
+                predecessor = self.get_predecessor(node.left_node)
+                 # swap the node and predecessor
+                temp = predecessor.data
+                predecessor.data=node.data
+                node.data=temp
+                self.remove_node(data,predecessor)
+    def get_predecessor(self,node):
+        if node.right_node:
+            return self.get_predecessor(node.right_node)
+        return node
                 
+    
     # to get the minimum value from BST
     def get_min(self):
         if self.root:
@@ -74,6 +139,11 @@ if __name__=='__main__':
     bst.insert(12)
     bst.insert(99)
     bst.insert(-8)
+    
+    bst.remove(9)
+    bst.remove(25)
+    bst.remove(4)
+    print('..................')
     print('max value : %s' % bst.get_max())
     print('min value : %s' % bst.get_min())
     bst.traverse()
